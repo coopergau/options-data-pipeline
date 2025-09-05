@@ -40,7 +40,7 @@ def connect_to_database():
 
         # Test connection
         with engine.connect() as connect:
-            pass
+            print(f'Connected to Database')
         return engine
     except Exception as e:
         print(f'Error connecting to database: {e}')
