@@ -59,9 +59,11 @@ def main():
 
     engine = connect_to_database()
 
-    option_tables = {'call': 'call_options', 'put': 'put_options'}
-    all_ticker_names = open('nasdaq100.txt').read().splitlines()
+    ticker_file = os.path.join(os.path.dirname(__file__), 'nasdaq100.txt')
+    all_ticker_names = open(ticker_file).read().splitlines()
 
+    option_tables = {'call': 'call_options', 'put': 'put_options'}
+    
     for option_type, table_name in option_tables.items():
         df_list = []
         

@@ -2,7 +2,7 @@
 - airflow
 - aws
 - change this line when its on aws in docker-compose.yaml:       AIRFLOW__WEBSERVER__SECRET_KEY: "my-example-project-secret-key-12345"
-
+- add the date/time of data retrieval in
 
 ## Things to make it good
 - make sure duplicates arent added to the tables
