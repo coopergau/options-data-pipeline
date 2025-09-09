@@ -31,6 +31,7 @@ def get_chain_df(ticker, exp_date, option_type, stock_price):
     chain['exp_date'] = exp_date
     chain['option_types'] = option_type
     chain['stock_price'] = stock_price
+    chain['ingested_at'] = datetime.now()
     return chain
 
 def connect_to_database():
@@ -55,7 +56,7 @@ def save_to_database(df, table_name, engine):
         print(f'Error saving to database: {e}')
         raise
 
-def main():
+def collect_options_data():
 
     engine = connect_to_database()
 
@@ -81,4 +82,4 @@ def main():
         save_to_database(combined_df, table_name, engine)
 
 if __name__ == '__main__':
-    main()
+    collect_options_data()
