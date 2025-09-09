@@ -20,3 +20,6 @@ env/
 
 # Ignore log files
 *.log
+
+# Useful commands
+commands.txt

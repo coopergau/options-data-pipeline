@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
 
-load_dotenv()
+load_dotenv('/home/ubuntu/options-airflow/.env')
 
 def get_expiration_dates(expiration_dates, days_out=31):
     # Returns expiration dates that fall within the next 'days_out' days
@@ -60,7 +60,7 @@ def collect_options_data():
 
     engine = connect_to_database()
 
-    ticker_file = os.path.join(os.path.dirname(__file__), 'nasdaq100.txt')
+    ticker_file = os.path.join(os.path.dirname(__file__), 'assets.txt')
     all_ticker_names = open(ticker_file).read().splitlines()
 
     option_tables = {'call': 'call_options', 'put': 'put_options'}
@@ -69,14 +69,17 @@ def collect_options_data():
         df_list = []
         
         for ticker_name in all_ticker_names:
-            ticker = yf.Ticker(ticker_name)
-            all_exp_dates = ticker.options
-            exp_dates = get_expiration_dates(all_exp_dates)
-            stock_price = ticker.fast_info['lastPrice']
-            
-            for exp_date in exp_dates:
-                chain = get_chain_df(ticker, exp_date, option_type, stock_price)
-                df_list.append(chain)
+            try:
+                ticker = yf.Ticker(ticker_name)
+                all_exp_dates = ticker.options
+                exp_dates = get_expiration_dates(all_exp_dates)
+                stock_price = ticker.fast_info['lastPrice']
+                
+                for exp_date in exp_dates:
+                    chain = get_chain_df(ticker, exp_date, option_type, stock_price)
+                    df_list.append(chain)
+            except Exception as e:
+                print(f'{ticker_name} failed to return data: {e}')
             
         combined_df = pd.concat(df_list, ignore_index=True)
         save_to_database(combined_df, table_name, engine)
