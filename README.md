@@ -1,7 +1,6 @@
 ## Things to add to get finished
-- airflow
-- aws
 - add a clean and safe commands.txt file
+ - change stock price to asset price
 
 ## Things to make it good
 - make sure duplicates arent added to the tables
