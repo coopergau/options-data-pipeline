@@ -1,6 +1,7 @@
 import yfinance as yf
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
@@ -28,10 +29,24 @@ def get_chain_df(ticker, exp_date, option_type, stock_price):
         raise ValueError(f'Invalid option type: "{option_type}". Must be "call" or "put"')
         
     chain['ticker'] = ticker.ticker
-    chain['exp_date'] = exp_date
-    chain['option_types'] = option_type
-    chain['stock_price'] = stock_price
-    chain['ingested_at'] = datetime.now()
+    chain['expDate'] = pd.to_datetime(exp_date, utc=True)
+    chain['optionTypes'] = option_type
+    chain['stockPrice'] = stock_price
+    chain['ingestedAt'] = pd.Timestamp.now(tz='UTC')
+    if option_type == 'call':
+        chain['intrinsicValue'] = np.maximum(stock_price - chain['strike'], 0)
+    else:
+        chain['intrinsicValue'] = np.maximum(chain['strike'] - stock_price, 0)
+
+    chain['volume'] = pd.to_numeric(chain['volume'], errors='coerce').astype('Int64')
+    chain['openInterest'] = pd.to_numeric(chain['openInterest'], errors='coerce').astype('Int64')
+
+    numeric_cols = ['strike', 'lastPrice', 'bid', 'ask', 'change', 'percentChange',
+                    'impliedVolatility', 'stockPrice', 'intrinsicValue']
+    for col in numeric_cols:
+        if col in chain.columns:
+            chain[col] = pd.to_numeric(chain[col], errors='coerce').round(4)
+
     return chain
 
 def connect_to_database():
