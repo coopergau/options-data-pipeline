@@ -21,13 +21,16 @@ The data is stored in a PostgreSQL database hosted on AWS Relational Database Se
 Power BI connects directly to the RDS database to import and analyze the data.
 
 ## Visuals
-### 1. 
-<img src="images/threshold.PNG" width="600" />
-### 2. 
-<img src="images/threshold.PNG" width="600" />
-### 3. 
-<img src="images/threshold.PNG" width="600" />
-### 4.
-<img src="images/threshold.PNG" width="600" />
+### 1. Overall Volume and Spread
+<img src="images/vol_and_spread.PNG" width="600" />
+
+### 2. Call and Put Volume and Open Interest
+<img src="images/vol_and_oi.PNG" width="600" />
+
+### 3. Contract and Asset Price Action
+<img src="images/price_action.PNG" width="600" />
+
+### 4. Put and Call Volume Difference vs Asset Performance
+<img src="images/future_sentiment.PNG" width="600" />
 
 
