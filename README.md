@@ -1,25 +1,9 @@
-## Things to add to get finished
-- add a clean and safe commands.txt file
- - change stock price to asset price
+# Options Chain Data Pipeline
 
-## Things to make it good
-- make sure duplicates arent added to the tables
-- handle failures
-
-RDS (Postgres) – managed database, replaces your local Docker DB.
-Realistic: no company wants prod data in a Docker container on one laptop.
-
-ECR (Elastic Container Registry) – store your Dockerized Python script.
-Realistic: standard way to run custom code in AWS.
-
-MWAA (Airflow) – orchestrator that runs the script every day.
-Realistic: industry standard for scheduling pipelines.
-
-Secrets Manager – holds your DB creds.
-Professional: avoids hardcoding passwords.
-
-CloudWatch – Airflow/MWAA logs automatically go here.
-Practical: how teams debug failed runs.
+## Table of Contents
+- [Overview](#overview)
+- [Pipeline Features](#pipeline-features)
+- [Visuals](#visuals)
 
 ## running docker
 ### install
