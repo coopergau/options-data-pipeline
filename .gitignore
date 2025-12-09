@@ -21,8 +21,6 @@ env/
 # Ignore log files
 *.log
 
-# Useful commands
-commands.txt
 
 power_bi/call_data/
 power_bi/put_data/
